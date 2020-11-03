@@ -8,11 +8,11 @@
 		<version>2.3.3.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.findork.security</groupId>
-	<artifactId>security-be</artifactId>
+	<groupId>com.findork.chiriezerie</groupId>
+	<artifactId>chiriezerie</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>security-be</name>
-	<description>security-be</description>
+	<name>chiriezerie</name>
+	<description>chiriezerie</description>
 
 	<properties>
 		<java.version>14</java.version>
