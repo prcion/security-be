@@ -49,9 +49,9 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@RequestBody LoginRequest loginRequest) {
 
-        var userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getUserNameOrEmail());
+        var userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getUsername());
 
-        authenticate(loginRequest.getUserNameOrEmail(), loginRequest.getPassword(), userDetails.getAuthorities());
+        authenticate(loginRequest.getUsername(), loginRequest.getPassword(), userDetails.getAuthorities());
 
 
         var refreshJwt = tokenProvider.generateRefreshToken(userDetails);

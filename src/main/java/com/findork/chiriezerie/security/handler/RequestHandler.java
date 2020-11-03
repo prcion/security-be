@@ -26,7 +26,7 @@ public class RequestHandler {
         String authInfo = authParts[0];
         String[] credentials = authInfo.split(":");
         LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUserNameOrEmail(credentials[0]);
+        loginRequest.setUsername(credentials[0]);
         loginRequest.setPassword(credentials[1]);
         return loginRequest;
     }
