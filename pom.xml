@@ -8,11 +8,11 @@
 		<version>2.3.3.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.findork.chiriezerie</groupId>
-	<artifactId>chiriezerie</artifactId>
+	<groupId>com.servustech.skeleton</groupId>
+	<artifactId>skeleton</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>chiriezerie</name>
-	<description>chiriezerie</description>
+	<name>skeleton</name>
+	<description>skeleton</description>
 
 	<properties>
 		<java.version>14</java.version>
