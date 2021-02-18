@@ -1,4 +1,4 @@
-package com.servustech.skeleton.feature.account.role;
+package com.servustech.skeleton.features.account.role;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

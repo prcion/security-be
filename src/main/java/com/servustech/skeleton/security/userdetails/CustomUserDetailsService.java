@@ -1,8 +1,9 @@
 package com.servustech.skeleton.security.userdetails;
 
-import com.servustech.skeleton.feature.account.AccountStatus;
-import com.servustech.skeleton.feature.account.User;
-import com.servustech.skeleton.feature.account.UserRepository;
+import com.servustech.skeleton.exception.CustomException;
+import com.servustech.skeleton.features.account.AccountStatus;
+import com.servustech.skeleton.features.account.User;
+import com.servustech.skeleton.features.account.UserRepository;
 import com.servustech.skeleton.util.LoginAttemptService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,14 +32,24 @@ public class CustomUserDetailsService implements UserDetailsService {
         // Let people login with either username or email
         User user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail));
+
+        checkForUnconfirmedAccount(user);
+
         validateLoginAttempt(user);
         return new UserPrincipal(user);
     }
 
 
+    private void checkForUnconfirmedAccount(User user){
+
+        if (user.isInactive())
+            throw new CustomException("Account is inactive");
+    }
+
     private void validateLoginAttempt(User user) {
-        if(!user.isLocked()) {
-            if(loginAttemptService.hasExceededMaxAttempts(user.getUsername())) {
+
+        if (!user.isLocked()) {
+            if (loginAttemptService.hasExceededMaxAttempts(user.getUsername())) {
                 user.setAccountStatus(AccountStatus.LOCKED);
             } else {
                 user.setAccountStatus(AccountStatus.ACTIVE);

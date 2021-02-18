@@ -1,6 +1,6 @@
-package com.servustech.skeleton.feature.account;
+package com.servustech.skeleton.features.account;
 
-import com.servustech.skeleton.feature.account.role.Role;
+import com.servustech.skeleton.features.account.role.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -63,6 +63,9 @@ public class User{
 
     public boolean isBanned() {
         return accountStatus.isBanned();
+    }
+    public boolean isInactive(){
+        return accountStatus.isInactive();
     }
 
     public boolean isLocked() {

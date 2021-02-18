@@ -1,4 +1,4 @@
-package com.servustech.skeleton.feature.account;
+package com.servustech.skeleton.features.account;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;

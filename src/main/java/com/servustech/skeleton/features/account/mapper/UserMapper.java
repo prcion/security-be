@@ -1,6 +1,6 @@
-package com.servustech.skeleton.feature.account.mapper;
+package com.servustech.skeleton.features.account.mapper;
 
-import com.servustech.skeleton.feature.account.User;
+import com.servustech.skeleton.features.account.User;
 import com.servustech.skeleton.security.payload.SignUpRequest;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;

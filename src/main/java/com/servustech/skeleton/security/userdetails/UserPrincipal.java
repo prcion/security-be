@@ -1,6 +1,6 @@
 package com.servustech.skeleton.security.userdetails;
 
-import com.servustech.skeleton.feature.account.User;
+import com.servustech.skeleton.features.account.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

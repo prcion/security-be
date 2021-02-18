@@ -1,13 +1,17 @@
 package com.servustech.skeleton.security.auth;
 
-import com.servustech.skeleton.feature.account.User;
-import com.servustech.skeleton.feature.account.mapper.UserMapper;
+import com.servustech.skeleton.features.confirmationtoken.ConfirmationToken;
+import com.servustech.skeleton.features.account.User;
+import com.servustech.skeleton.features.account.mapper.UserMapper;
+import com.servustech.skeleton.features.confirmationtoken.ConfirmationTokenService;
 import com.servustech.skeleton.security.constants.AuthConstants;
 import com.servustech.skeleton.security.handler.RequestHandler;
 import com.servustech.skeleton.security.jwt.JwtTokenProvider;
 import com.servustech.skeleton.security.payload.*;
 import com.servustech.skeleton.security.userdetails.CustomUserDetailsService;
 import com.servustech.skeleton.util.HttpResponseUtil;
+import com.servustech.skeleton.utils.MailService;
+import com.servustech.skeleton.utils.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,8 +23,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -41,6 +48,10 @@ public class AuthController {
     private final AuthService authService;
     private final HttpResponseUtil httpResponseUtil;
     private final CustomUserDetailsService customUserDetailsService;
+    private final MailService mailService;
+    private final ConfirmationTokenService confirmationTokenService;
+
+
     /**
      * Validate the credentials and generate the jwt tokens
      *
@@ -50,6 +61,7 @@ public class AuthController {
     public ResponseEntity<?> signin(@RequestBody LoginRequest loginRequest) {
 
         var userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getUsername());
+
 
         authenticate(loginRequest.getUsername(), loginRequest.getPassword(), userDetails.getAuthorities());
 
@@ -91,6 +103,7 @@ public class AuthController {
         }
     }
 
+
     /**
      * Validate the access token and returns user details
      *
@@ -110,12 +123,23 @@ public class AuthController {
      */
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) throws UnsupportedEncodingException, MessagingException {
         authService.verifyIfUsernameOrEmailExists(signUpRequest.getUsername(), signUpRequest.getEmail());
 
         User user = userMapper.signUpRequestToUser(signUpRequest);
 
+
         authService.save(user);
+
+        String confirmToken = TokenUtils.generateConfirmationToken();
+
+
+        confirmationTokenService.saveToken(new ConfirmationToken(confirmToken, LocalDateTime.now(), authService.findByUsernameOrEmail(user.getUsername())));
+
+
+
+        mailService.sendRegisterConfirmationEmail(user.getEmail(),confirmToken);
+
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
@@ -127,4 +151,13 @@ public class AuthController {
                 .body(httpResponseUtil.createHttpResponse(HttpStatus.CREATED, "User registered successfully"));
     }
 
+
+    @PutMapping("/confirmation")
+    public void confirmUserAccount(@Valid @RequestParam("email") String email, @RequestParam("token") String confirmationToken ) {
+
+        authService.validateToken(confirmationToken, confirmationTokenService.findConfirmationTokenByEmail(email));
+
+        confirmationTokenService.deleteTokenAfterConfirmation(confirmationToken);
+
+    }
 }
