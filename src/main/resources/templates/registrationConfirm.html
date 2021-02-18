@@ -21,11 +21,6 @@
                 <span style="">To activate your account please click the link below:</span></td>
         </tr>
         <tr style="width: 500px; background-color: white;">
-            <div>
-
-                {${baseUrl}} + 'api/auth/confirmation?email='+ ${email} +'&amp;confirmationToken=' + ${confirmationToken}
-
-            </div>
 
             <td style="text-align: center; padding-bottom: 30px"><a th:href="@{${baseUrl}} + 'api/auth/confirmation?email='+${email}+'&amp;token=' + ${token}" target="_blank" rel="nofollow">
                 <span
