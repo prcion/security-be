@@ -35,6 +35,19 @@ public class ExceptionHandling {
         return httpResponseUtil.createHttpResponse(BAD_REQUEST, exception.getMessage());
     }
 
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<HttpResponse> alreadyExistsException(CustomException exception) {
+        log.error(exception.getMessage());
+        return httpResponseUtil.createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidConfirmTokenException.class)
+    public ResponseEntity<HttpResponse> alreadyExistsException(InvalidConfirmTokenException exception) {
+        log.error(exception.getMessage());
+        return httpResponseUtil.createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }
+
+
     @ExceptionHandler(DisabledException.class)
     public ResponseEntity<HttpResponse> accountDisabledException() {
         return httpResponseUtil.createHttpResponse(BAD_REQUEST, ACCOUNT_DISABLED);
@@ -56,4 +69,6 @@ public class ExceptionHandling {
         HttpMethod supportedMethod = Objects.requireNonNull(exception.getSupportedHttpMethods()).iterator().next();
         return httpResponseUtil.createHttpResponse(METHOD_NOT_ALLOWED, String.format(METHOD_IS_NOT_ALLOWED, supportedMethod));
     }
+
+
 }

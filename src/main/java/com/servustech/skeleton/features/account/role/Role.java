@@ -1,4 +1,4 @@
-package com.servustech.skeleton.feature.account.role;
+package com.servustech.skeleton.features.account.role;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

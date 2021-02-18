@@ -1,4 +1,4 @@
-package com.servustech.skeleton.feature.account;
+package com.servustech.skeleton.features.account;
 
 import com.servustech.skeleton.security.payload.UserRequest;
 import org.springframework.security.access.prepost.PreAuthorize;

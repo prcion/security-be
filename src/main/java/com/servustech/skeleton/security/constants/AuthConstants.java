@@ -12,4 +12,6 @@ public class AuthConstants
     public static final String NOT_AUTHORISED= "Sorry, You're not authorized to access this resource due to : ";
 
     public static final String ROLES_KEY = "Roles";
+
+    public static final String INVALID_CONFIRMATION_TOKEN = "Invalid confirmation token";
 }

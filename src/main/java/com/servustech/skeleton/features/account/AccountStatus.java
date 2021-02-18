@@ -1,7 +1,7 @@
-package com.servustech.skeleton.feature.account;
+package com.servustech.skeleton.features.account;
 
 public enum AccountStatus {
-    ACTIVE, BANNED, LOCKED;
+    ACTIVE, BANNED, LOCKED, INACTIVE;
 
     public boolean isActive() {
         return this == ACTIVE;
@@ -14,4 +14,6 @@ public enum AccountStatus {
     public boolean isLocked() {
         return this == LOCKED;
     }
+
+    public boolean isInactive(){return this == INACTIVE;}
 }
