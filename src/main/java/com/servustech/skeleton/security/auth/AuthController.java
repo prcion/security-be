@@ -153,7 +153,7 @@ public class AuthController {
 
 
     @PutMapping("/confirmation")
-    public void confirmUserAccount(@Valid @RequestParam("email") String email, @RequestParam("token") String confirmationToken ) {
+    public void confirmUserAccount(@Valid @RequestParam("email") String email, @RequestParam("token") String confirmationToken) {
 
         authService.validateToken(confirmationToken, confirmationTokenService.findConfirmationTokenByEmail(email));
 
