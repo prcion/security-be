@@ -1,4 +1,4 @@
-package com.servustech.skeleton.util;
+package com.servustech.skeleton.utils.httpresponse;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

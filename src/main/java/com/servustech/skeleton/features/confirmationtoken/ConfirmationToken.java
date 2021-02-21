@@ -7,17 +7,12 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-/*
- * Created by Luci on 22-Jun-17.
- */
 
-@Setter
-@Getter
-@ToString
-@Entity
-@Table(name = "confirmation_tokens")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Entity
+@Table(name = "confirmation_tokens")
 public class ConfirmationToken {
 
     @Id

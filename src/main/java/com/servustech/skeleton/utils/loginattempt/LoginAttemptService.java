@@ -1,4 +1,4 @@
-package com.servustech.skeleton.util;
+package com.servustech.skeleton.utils.loginattempt;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

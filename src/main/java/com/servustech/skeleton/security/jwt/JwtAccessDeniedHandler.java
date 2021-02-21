@@ -1,7 +1,7 @@
 package com.servustech.skeleton.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.servustech.skeleton.util.HttpResponse;
+import com.servustech.skeleton.utils.httpresponse.HttpResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;

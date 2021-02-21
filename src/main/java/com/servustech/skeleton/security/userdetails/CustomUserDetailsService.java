@@ -4,7 +4,7 @@ import com.servustech.skeleton.exception.CustomException;
 import com.servustech.skeleton.features.account.AccountStatus;
 import com.servustech.skeleton.features.account.User;
 import com.servustech.skeleton.features.account.UserRepository;
-import com.servustech.skeleton.util.LoginAttemptService;
+import com.servustech.skeleton.utils.loginattempt.LoginAttemptService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

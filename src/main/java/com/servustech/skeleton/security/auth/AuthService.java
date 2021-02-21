@@ -6,10 +6,7 @@ import com.servustech.skeleton.features.account.AccountStatus;
 import com.servustech.skeleton.features.account.User;
 import com.servustech.skeleton.features.account.UserRepository;
 import com.servustech.skeleton.features.confirmationtoken.ConfirmationToken;
-import com.servustech.skeleton.features.confirmationtoken.ConfirmationTokenRepository;
-import com.servustech.skeleton.features.confirmationtoken.ConfirmationTokenService;
 import com.servustech.skeleton.security.constants.AuthConstants;
-import com.servustech.skeleton.utils.MailService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
