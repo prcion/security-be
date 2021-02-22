@@ -25,7 +25,6 @@ public class AuthService {
     private final UserRepository userRepository;
     private final ConfirmationTokenService confirmationTokenService;
 
-
     public void verifyIfUsernameOrEmailExists(String username, String email) {
         if (userRepository.existsByUsername(username) || userRepository.existsByEmail(email)) {
             throw new AlreadyExistsException(AuthConstants.USERNAME_OR_EMAIL_EXIST);
@@ -36,18 +35,11 @@ public class AuthService {
         return userRepository.save(user);
     }
 
-    public User findByUsernameOrEmail(String userNameOrEmail) {
-        return userRepository.findByUsernameOrEmail(userNameOrEmail, userNameOrEmail)
-                .orElseThrow(() -> new AlreadyExistsException(AuthConstants.USERNAME_OR_EMAIL_EXIST));
-    }
-
-
     @Transactional
     public void validateTokenAndSetUserStatusToActive(String confirmationToken, String email) {
+        var confirmationTokenDB = confirmationTokenService.validateToken(email, confirmationToken);
 
-        ConfirmationToken confirmationTokenDB = confirmationTokenService.validateToken(email, confirmationToken);
-
-        User user = confirmationTokenDB.getUser();
+        var user = confirmationTokenDB.getUser();
 
         user.setAccountStatus(AccountStatus.ACTIVE);
 

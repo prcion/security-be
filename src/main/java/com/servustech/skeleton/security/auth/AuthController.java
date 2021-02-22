@@ -134,15 +134,7 @@ public class AuthController {
 
         mailService.sendRegisterConfirmationEmail(user.getEmail(), confirmToken);
 
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path("/users/{username}")
-                .buildAndExpand(user.getUsername()).toUri();
-
-        return ResponseEntity
-                .created(location)
-                .body(httpResponseUtil.createHttpResponse(HttpStatus.CREATED, "User registered successfully"));
+        return ResponseEntity.ok(httpResponseUtil.createHttpResponse(HttpStatus.CREATED, "User registered successfully"));
     }
 
 
