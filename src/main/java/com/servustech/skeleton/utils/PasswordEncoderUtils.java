@@ -5,8 +5,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-@Component
+
 @AllArgsConstructor
+@Component
 public class PasswordEncoderUtils {
 
     private static final BCryptPasswordEncoder passwordEncoder;
