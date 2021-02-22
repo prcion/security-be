@@ -58,7 +58,7 @@ properties:
 
 jwt:
   issuer: auth
-  access-expiration-in-ms: 180000
+  access-expiration-in-ms: 1800000
   refresh-expiration-in-ms: 3600000
   alias: prgxKey
   certificate: prgxKey.jks
