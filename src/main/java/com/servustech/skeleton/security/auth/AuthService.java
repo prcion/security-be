@@ -1,11 +1,9 @@
 package com.servustech.skeleton.security.auth;
 
-import com.servustech.skeleton.exception.AlreadyExistsException;
-import com.servustech.skeleton.exception.CustomException;
+import com.servustech.skeleton.exceptions.AlreadyExistsException;
 import com.servustech.skeleton.features.account.AccountStatus;
 import com.servustech.skeleton.features.account.User;
 import com.servustech.skeleton.features.account.UserRepository;
-import com.servustech.skeleton.features.confirmationtoken.ConfirmationToken;
 import com.servustech.skeleton.features.confirmationtoken.ConfirmationTokenService;
 import com.servustech.skeleton.security.constants.AuthConstants;
 import com.servustech.skeleton.security.payload.ChangePasswordRequest;

@@ -1,27 +1,26 @@
 package com.servustech.skeleton.features.confirmationtoken;
 
 
-import com.servustech.skeleton.exception.InvalidConfirmTokenException;
+import com.servustech.skeleton.exceptions.InvalidConfirmTokenException;
 import com.servustech.skeleton.security.constants.AuthConstants;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class ConfirmationTokenService {
 
-    @Autowired
-    private ConfirmationTokenRepository confirmationTokenRepository;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
 
     public void saveToken(ConfirmationToken confirmationToken) {
         confirmationTokenRepository.save(confirmationToken);
     }
 
     public ConfirmationToken findConfirmationTokenByEmail(String email) {
-
-        return confirmationTokenRepository.findByUserEmail(email).orElseThrow(() -> new InvalidConfirmTokenException(AuthConstants.INVALID_CONFIRMATION_TOKEN));
+        return confirmationTokenRepository.findByUserEmail(email)
+                .orElseThrow(() -> new InvalidConfirmTokenException(AuthConstants.INVALID_CONFIRMATION_TOKEN));
     }
 
     @Transactional
@@ -33,11 +32,10 @@ public class ConfirmationTokenService {
 
         ConfirmationToken confirmationToken = findConfirmationTokenByEmail(email);
 
-        if (!confirmationToken.equals(confirmationTokenRequest)) {
+        if (!confirmationToken.getValue().equals(confirmationTokenRequest)) {
             throw new InvalidConfirmTokenException(AuthConstants.INVALID_CONFIRMATION_TOKEN);
         }
 
         return confirmationToken;
-
     }
 }

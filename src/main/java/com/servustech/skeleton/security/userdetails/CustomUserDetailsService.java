@@ -1,6 +1,6 @@
 package com.servustech.skeleton.security.userdetails;
 
-import com.servustech.skeleton.exception.CustomException;
+import com.servustech.skeleton.exceptions.CustomException;
 import com.servustech.skeleton.features.account.AccountStatus;
 import com.servustech.skeleton.features.account.User;
 import com.servustech.skeleton.features.account.UserRepository;

@@ -11,13 +11,10 @@ import java.util.Optional;
 @Repository
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Integer> {
 
-
     @Query("SELECT t FROM ConfirmationToken t where t.user.email = :email")
     Optional<ConfirmationToken> findByUserEmail(@Param("email") String email);
 
     @Modifying
     @Query("DELETE FROM ConfirmationToken CT WHERE CT.value =:confirmationToken")
     void deleteConfirmationTokenByValue(@Param("confirmationToken") String confirmationToken);
-
-
 }

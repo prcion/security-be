@@ -1,7 +1,7 @@
 package com.servustech.skeleton.utils.filestorage;
 
 
-import com.servustech.skeleton.exception.LocalizableRuntimeException;
+import com.servustech.skeleton.exceptions.LocalizableRuntimeException;
 
 public class FileStorageException extends LocalizableRuntimeException {
 

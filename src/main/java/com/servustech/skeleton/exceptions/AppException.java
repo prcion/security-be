@@ -1,4 +1,4 @@
-package com.servustech.skeleton.exception;
+package com.servustech.skeleton.exceptions;
 
 public class AppException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package com.servustech.skeleton.exception;
+package com.servustech.skeleton.exceptions;
 
 import com.servustech.skeleton.utils.httpresponse.HttpResponse;
 import com.servustech.skeleton.utils.httpresponse.HttpResponseUtil;

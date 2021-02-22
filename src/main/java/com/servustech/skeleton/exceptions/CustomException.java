@@ -1,4 +1,4 @@
-package com.servustech.skeleton.exception;
+package com.servustech.skeleton.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

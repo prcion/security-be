@@ -1,6 +1,6 @@
 package com.servustech.skeleton.security.handler;
 
-import com.servustech.skeleton.exception.AppException;
+import com.servustech.skeleton.exceptions.AppException;
 import com.servustech.skeleton.security.constants.AuthConstants;
 import com.servustech.skeleton.security.constants.ErrorCodes;
 import com.servustech.skeleton.security.payload.LoginRequest;
