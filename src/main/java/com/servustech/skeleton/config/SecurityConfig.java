@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private static final String[] swaggerConfig = {"/swagger**", "/**/swagger**", "/**/springfox**", "/api-doc/**", "/**/api-docs"};
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -68,8 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
-                .antMatchers("/api/auth/signin", "/api/auth/signup", "/api/auth/confirmation").permitAll()
+                .antMatchers("/api/auth/register", "/api/auth/login", "/api/auth/confirmation").permitAll()
+                .antMatchers("/app/**/*.{js,html}").permitAll()
+                .antMatchers(swaggerConfig).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()

@@ -1,7 +1,7 @@
 package com.servustech.skeleton.listener;
 
 import com.servustech.skeleton.security.userdetails.UserPrincipal;
-import com.servustech.skeleton.util.LoginAttemptService;
+import com.servustech.skeleton.utils.loginattempt.LoginAttemptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;

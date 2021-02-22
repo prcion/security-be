@@ -50,6 +50,12 @@ spring:
   thymeleaf:
     enabled: false
 
+  file-service:
+    path: src/main/resources/uploated-files/
+    path-delimiter: \\
+    domain: http://localhost:8080/
+  storage:
+    type: FILE_SYSTEM
 
 
 properties:
@@ -65,3 +71,11 @@ jwt:
   store-password: prgxpass
   key-password: prgxpass
   secret: 68?Rctu2?_p}Hh8}&=|j!dSVh,en).=SQA6&U+BSx/Fhs84kdg5.V'y;G8Es.9S8NH9Th}~8Bd4yc_Mi
+
+cloud:
+  aws:
+    credentials:
+      accessKey: test
+      secretKey: test
+    region: eu-west-1
+    bucket: test

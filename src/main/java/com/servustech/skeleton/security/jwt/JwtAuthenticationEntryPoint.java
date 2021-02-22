@@ -1,7 +1,7 @@
 package com.servustech.skeleton.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.servustech.skeleton.util.HttpResponse;
+import com.servustech.skeleton.utils.httpresponse.HttpResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

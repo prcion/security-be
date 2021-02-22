@@ -13,9 +13,9 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Builder
 @Data
-public class SignUpRequest {
+public class RegisterRequest {
     @NotBlank
-    @Size(min = 4, max = 40)
+    @Size(min = 2, max = 40)
     private String name;
 
     @NotBlank

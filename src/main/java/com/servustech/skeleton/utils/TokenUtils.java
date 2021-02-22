@@ -2,11 +2,6 @@ package com.servustech.skeleton.utils;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-/**
- * Class used to generate a registration token which will be sent by email for e.g. to the user.
- *
- * @author Arpad Sebesi
- */
 public class TokenUtils {
 
     private static final int TOKEN_LENGTH = 8;

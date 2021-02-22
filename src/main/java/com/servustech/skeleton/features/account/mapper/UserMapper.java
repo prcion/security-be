@@ -1,7 +1,7 @@
 package com.servustech.skeleton.features.account.mapper;
 
 import com.servustech.skeleton.features.account.User;
-import com.servustech.skeleton.security.payload.SignUpRequest;
+import com.servustech.skeleton.security.payload.RegisterRequest;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 
@@ -9,6 +9,6 @@ import org.mapstruct.Mapper;
 @DecoratedWith(UserMapperDecorator.class)
 public interface UserMapper {
 
-    User signUpRequestToUser(SignUpRequest signUpRequest);
+    User signUpRequestToUser(RegisterRequest registerRequest);
 
 }

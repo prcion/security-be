@@ -1,4 +1,4 @@
-package com.servustech.skeleton.util;
+package com.servustech.skeleton.utils.httpresponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

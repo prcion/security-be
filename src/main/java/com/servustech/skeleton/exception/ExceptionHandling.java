@@ -1,7 +1,7 @@
 package com.servustech.skeleton.exception;
 
-import com.servustech.skeleton.util.HttpResponse;
-import com.servustech.skeleton.util.HttpResponseUtil;
+import com.servustech.skeleton.utils.httpresponse.HttpResponse;
+import com.servustech.skeleton.utils.httpresponse.HttpResponseUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

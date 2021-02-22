@@ -9,8 +9,8 @@ import com.servustech.skeleton.security.handler.RequestHandler;
 import com.servustech.skeleton.security.jwt.JwtTokenProvider;
 import com.servustech.skeleton.security.payload.*;
 import com.servustech.skeleton.security.userdetails.CustomUserDetailsService;
-import com.servustech.skeleton.util.HttpResponseUtil;
-import com.servustech.skeleton.utils.MailService;
+import com.servustech.skeleton.utils.httpresponse.HttpResponseUtil;
+import com.servustech.skeleton.utils.mail.MailService;
 import com.servustech.skeleton.utils.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +23,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.mail.MessagingException;
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -57,8 +55,8 @@ public class AuthController {
      *
      * @return access token and refresh token
      */
-    @PostMapping("/signin")
-    public ResponseEntity<?> signin(@RequestBody LoginRequest loginRequest) {
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
 
         var userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getUsername());
 
@@ -81,7 +79,7 @@ public class AuthController {
      *
      * @return access token
      */
-    @GetMapping("/refreshToken")
+    @GetMapping("/refresh-token")
     public ResponseEntity<?> refreshToken(@RequestHeader(AuthConstants.AUTH_KEY) String authRefreshToken) {
         System.out.println(authRefreshToken);
         try {
@@ -109,7 +107,7 @@ public class AuthController {
      *
      * @return status of token
      */
-    @GetMapping("/userDetails")
+    @GetMapping("/user-details")
     public ResponseEntity<?> details(@RequestHeader(AuthConstants.AUTH_KEY) String authToken) {
         String jwt = requestHandler.getJwtFromStringRequest(authToken);
         UserDetailsResponse response = tokenProvider.getUserNameAndRolesFromJWT(jwt);
@@ -121,12 +119,12 @@ public class AuthController {
      *
      * @return user registration status
      */
-    @PostMapping("/signup")
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) throws UnsupportedEncodingException, MessagingException {
-        authService.verifyIfUsernameOrEmailExists(signUpRequest.getUsername(), signUpRequest.getEmail());
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+        authService.verifyIfUsernameOrEmailExists(registerRequest.getUsername(), registerRequest.getEmail());
 
-        User user = userMapper.signUpRequestToUser(signUpRequest);
+        User user = userMapper.signUpRequestToUser(registerRequest);
 
 
         authService.save(user);
