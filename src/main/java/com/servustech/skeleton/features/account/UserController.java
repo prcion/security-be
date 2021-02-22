@@ -11,7 +11,8 @@ public class UserController {
 
     @GetMapping("/user")
     @PreAuthorize("hasRole('USER')")
-    public String getCurrentUser() {
+    public String getCurrentUser(User user) {
+        System.out.println(user);
         return "Congratulation User you can access this api";
     }
 }
