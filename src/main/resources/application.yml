@@ -57,6 +57,10 @@ spring:
   storage:
     type: FILE_SYSTEM
 
+  output:
+    ansi:
+      enabled: always
+
 
 properties:
   baseUrl: http://localhost:8080/

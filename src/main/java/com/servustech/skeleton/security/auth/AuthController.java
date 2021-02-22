@@ -126,14 +126,11 @@ public class AuthController {
 
         User user = userMapper.signUpRequestToUser(registerRequest);
 
-
-        authService.save(user);
+        user = authService.save(user);
 
         String confirmToken = TokenUtils.generateConfirmationToken();
 
-
-        confirmationTokenService.saveToken(new ConfirmationToken(confirmToken, LocalDateTime.now(), authService.findByUsernameOrEmail(user.getUsername())));
-
+        confirmationTokenService.saveToken(new ConfirmationToken(confirmToken, user));
 
         mailService.sendRegisterConfirmationEmail(user.getEmail(), confirmToken);
 
@@ -155,8 +152,8 @@ public class AuthController {
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest request) {
-        authService.changeUserPassword(request);
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest request, User user) {
+        authService.changeUserPassword(request, user);
 
         return ResponseEntity.ok(httpResponseUtil.createHttpResponse(HttpStatus.OK,"User password changed successfully"));
     }

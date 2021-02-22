@@ -32,8 +32,8 @@ public class AuthService {
         }
     }
 
-    public void save(User user) {
-        userRepository.save(user);
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     public User findByUsernameOrEmail(String userNameOrEmail) {
@@ -52,18 +52,14 @@ public class AuthService {
         user.setAccountStatus(AccountStatus.ACTIVE);
 
         confirmationTokenService.deleteTokenAfterConfirmation(confirmationToken);
-
     }
 
 
     @Transactional
-    public void changeUserPassword(ChangePasswordRequest request) {
-
-        User user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new CustomException("Username not found!"));
+    public void changeUserPassword(ChangePasswordRequest request, User user) {
 
         PasswordEncoderUtils.verifyMatchingPasswords(request.getOldPassword(), user.getPassword());
 
         user.setPassword(PasswordEncoderUtils.encode(request.getNewPassword()));
-
     }
 }

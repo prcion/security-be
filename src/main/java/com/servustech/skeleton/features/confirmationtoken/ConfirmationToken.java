@@ -3,6 +3,7 @@ package com.servustech.skeleton.features.confirmationtoken;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.servustech.skeleton.features.account.User;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,7 +22,7 @@ public class ConfirmationToken {
 
     private String value;
 
-    @Column(name = "created_on", columnDefinition = "TIMESTAMP")
+    @CreatedDate
     private LocalDateTime createdOn;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -29,9 +30,8 @@ public class ConfirmationToken {
     @JsonIgnore
     private User user;
 
-    public ConfirmationToken(String value, LocalDateTime createdOn, User account) {
+    public ConfirmationToken(String value, User account) {
         this.value = value;
-        this.createdOn = createdOn;
         this.user = account;
     }
 }
