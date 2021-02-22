@@ -135,8 +135,7 @@ public class AuthController {
         confirmationTokenService.saveToken(new ConfirmationToken(confirmToken, LocalDateTime.now(), authService.findByUsernameOrEmail(user.getUsername())));
 
 
-
-        mailService.sendRegisterConfirmationEmail(user.getEmail(),confirmToken);
+        mailService.sendRegisterConfirmationEmail(user.getEmail(), confirmToken);
 
 
         URI location = ServletUriComponentsBuilder
@@ -152,10 +151,13 @@ public class AuthController {
 
     @PutMapping("/confirmation")
     public void confirmUserAccount(@Valid @RequestParam("email") String email, @RequestParam("token") String confirmationToken) {
+        authService.validateTokenAndSetUserStatusToActive(confirmationToken, email);
+    }
 
-        authService.validateToken(confirmationToken, confirmationTokenService.findConfirmationTokenByEmail(email));
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest request) {
+        authService.changeUserPassword(request);
 
-        confirmationTokenService.deleteTokenAfterConfirmation(confirmationToken);
-
+        return ResponseEntity.ok(httpResponseUtil.createHttpResponse(HttpStatus.OK,"User password changed successfully"));
     }
 }
