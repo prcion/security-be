@@ -6,8 +6,6 @@ import com.servustech.skeleton.security.constants.AuthConstants;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 @AllArgsConstructor
 @Service
 public class ConfirmationTokenService {
@@ -23,7 +21,6 @@ public class ConfirmationTokenService {
                 .orElseThrow(() -> new InvalidConfirmTokenException(AuthConstants.INVALID_CONFIRMATION_TOKEN));
     }
 
-    @Transactional
     public void deleteTokenAfterConfirmation(String confirmationToken) {
         confirmationTokenRepository.deleteConfirmationTokenByValue(confirmationToken);
     }

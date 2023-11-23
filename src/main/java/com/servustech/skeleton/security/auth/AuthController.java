@@ -1,17 +1,17 @@
 package com.servustech.skeleton.security.auth;
 
-import com.servustech.skeleton.features.confirmationtoken.ConfirmationToken;
 import com.servustech.skeleton.features.account.User;
 import com.servustech.skeleton.features.account.mapper.UserMapper;
+import com.servustech.skeleton.features.confirmationtoken.ConfirmationToken;
 import com.servustech.skeleton.features.confirmationtoken.ConfirmationTokenService;
 import com.servustech.skeleton.security.constants.AuthConstants;
 import com.servustech.skeleton.security.handler.RequestHandler;
 import com.servustech.skeleton.security.jwt.JwtTokenProvider;
 import com.servustech.skeleton.security.payload.*;
 import com.servustech.skeleton.security.userdetails.CustomUserDetailsService;
-import com.servustech.skeleton.utils.httpresponse.HttpResponseUtil;
-import com.servustech.skeleton.utils.mail.MailService;
 import com.servustech.skeleton.utils.TokenUtils;
+import com.servustech.skeleton.utils.httpresponse.HttpResponseUtil;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,11 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -46,7 +42,6 @@ public class AuthController {
     private final AuthService authService;
     private final HttpResponseUtil httpResponseUtil;
     private final CustomUserDetailsService customUserDetailsService;
-    private final MailService mailService;
     private final ConfirmationTokenService confirmationTokenService;
 
 
@@ -132,7 +127,6 @@ public class AuthController {
 
         confirmationTokenService.saveToken(new ConfirmationToken(confirmToken, user));
 
-        mailService.sendRegisterConfirmationEmail(user.getEmail(), confirmToken);
 
         return ResponseEntity.ok(httpResponseUtil.createHttpResponse(HttpStatus.CREATED, "User registered successfully"));
     }

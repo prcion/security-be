@@ -1,33 +1,32 @@
 package com.servustech.skeleton.features.confirmationtoken;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.servustech.skeleton.features.account.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
-@Table(name = "confirmation_tokens")
+@Document(collection = "confirmation_tokens")
 public class ConfirmationToken {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
 
     private String value;
 
     @CreatedDate
     private LocalDateTime createdOn;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
+    @DBRef
     private User user;
 
     public ConfirmationToken(String value, User account) {

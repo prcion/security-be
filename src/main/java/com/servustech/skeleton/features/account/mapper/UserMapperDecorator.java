@@ -2,12 +2,9 @@ package com.servustech.skeleton.features.account.mapper;
 
 import com.servustech.skeleton.features.account.AccountStatus;
 import com.servustech.skeleton.features.account.User;
-import com.servustech.skeleton.features.account.role.RoleService;
 import com.servustech.skeleton.security.payload.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Collections;
 
 public abstract class UserMapperDecorator implements UserMapper {
 
@@ -15,8 +12,6 @@ public abstract class UserMapperDecorator implements UserMapper {
     private UserMapper userMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private RoleService roleService;
 
 
     @Override
@@ -24,7 +19,7 @@ public abstract class UserMapperDecorator implements UserMapper {
         User user = userMapper.signUpRequestToUser(registerRequest);
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setAccountStatus(AccountStatus.INACTIVE);
-        user.setRoles(Collections.singleton(roleService.getUserRole()));
+        user.setRole("USER");
         return user;
     }
 }

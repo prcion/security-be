@@ -13,10 +13,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import javax.transaction.Transactional;
-
 @Component
-@Transactional
 @Slf4j
 @AllArgsConstructor
 public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolver {

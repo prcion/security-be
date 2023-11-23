@@ -4,10 +4,10 @@ import com.servustech.skeleton.exceptions.AppException;
 import com.servustech.skeleton.security.constants.AuthConstants;
 import com.servustech.skeleton.security.constants.ErrorCodes;
 import com.servustech.skeleton.security.payload.LoginRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * A handler class responsible to manipulate the request

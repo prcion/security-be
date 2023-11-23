@@ -12,8 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 
 @Service
 @Slf4j
@@ -33,7 +31,6 @@ public class AuthService {
         return userRepository.save(user);
     }
 
-    @Transactional
     public void validateTokenAndSetUserStatusToActive(String confirmationToken, String email) {
         var confirmationTokenDB = confirmationTokenService.validateToken(email, confirmationToken);
 
@@ -41,15 +38,18 @@ public class AuthService {
 
         user.setAccountStatus(AccountStatus.ACTIVE);
 
+        userRepository.save(user);
+
         confirmationTokenService.deleteTokenAfterConfirmation(confirmationToken);
     }
 
 
-    @Transactional
     public void changeUserPassword(ChangePasswordRequest request, User user) {
 
         PasswordEncoderUtils.verifyMatchingPasswords(request.getOldPassword(), user.getPassword());
 
         user.setPassword(PasswordEncoderUtils.encode(request.getNewPassword()));
+
+        userRepository.save(user);
     }
 }

@@ -1,10 +1,8 @@
 package com.servustech.skeleton.security.userdetails;
 
 import com.servustech.skeleton.exceptions.CustomException;
-import com.servustech.skeleton.features.account.AccountStatus;
 import com.servustech.skeleton.features.account.User;
 import com.servustech.skeleton.features.account.UserRepository;
-import com.servustech.skeleton.utils.loginattempt.LoginAttemptService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final LoginAttemptService loginAttemptService;
     /**
      * Get userName from database and create a user principal
      *
@@ -35,7 +32,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         checkForUnconfirmedAccount(user);
 
-        validateLoginAttempt(user);
         return new UserPrincipal(user);
     }
 
@@ -44,20 +40,5 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         if (user.isInactive())
             throw new CustomException("Account is inactive");
-    }
-
-    private void validateLoginAttempt(User user) {
-
-        if (!user.isLocked()) {
-            if (loginAttemptService.hasExceededMaxAttempts(user.getUsername())) {
-                user.setAccountStatus(AccountStatus.LOCKED);
-            } else {
-                user.setAccountStatus(AccountStatus.ACTIVE);
-            }
-        } else {
-            if (!loginAttemptService.hasExceededMaxAttempts(user.getUsername())) {
-                user.setAccountStatus(AccountStatus.ACTIVE);
-            }
-        }
     }
 }

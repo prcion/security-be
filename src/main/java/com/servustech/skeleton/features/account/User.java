@@ -1,61 +1,34 @@
 package com.servustech.skeleton.features.account;
 
-import com.servustech.skeleton.features.account.role.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.NaturalId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-@Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"username"}),
-        @UniqueConstraint(columnNames = {"email"})}
-)
+@Document(collection = "users")
 public class User{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @NotBlank
-    @Size(max = 40)
     private String name;
 
-    @NotBlank
-    @Size(max = 15)
     private String username;
 
-    @NaturalId
-    @NotBlank
-    @Size(max = 40)
-    @Email
     private String email;
 
-    @NotBlank
-    @Size(max = 100)
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "account_status")
     private AccountStatus accountStatus = AccountStatus.ACTIVE;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private String role;
 
     public boolean isActive() {
         return accountStatus.isActive();
