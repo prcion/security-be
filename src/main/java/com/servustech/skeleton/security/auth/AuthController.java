@@ -1,7 +1,7 @@
 package com.servustech.skeleton.security.auth;
 
 import com.servustech.skeleton.features.account.User;
-import com.servustech.skeleton.features.account.mapper.UserMapper;
+import com.servustech.skeleton.features.account.UserConverter;
 import com.servustech.skeleton.features.confirmationtoken.ConfirmationToken;
 import com.servustech.skeleton.features.confirmationtoken.ConfirmationTokenService;
 import com.servustech.skeleton.security.constants.AuthConstants;
@@ -38,7 +38,7 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
     private final RequestHandler requestHandler;
-    private final UserMapper userMapper;
+    private final UserConverter userConverter;
     private final AuthService authService;
     private final HttpResponseUtil httpResponseUtil;
     private final CustomUserDetailsService customUserDetailsService;
@@ -119,7 +119,7 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
         authService.verifyIfUsernameOrEmailExists(registerRequest.getUsername(), registerRequest.getEmail());
 
-        User user = userMapper.signUpRequestToUser(registerRequest);
+        User user = userConverter.signUpRequestToUser(registerRequest);
 
         user = authService.save(user);
 

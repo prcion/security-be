@@ -1,22 +1,19 @@
 package com.servustech.skeleton.features.account;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import com.servustech.skeleton.features.commons.BaseDocument;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
 
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 @Document(collection = "users")
-public class User{
-    @Id
-    private String id;
+public class User extends BaseDocument {
+
 
     private String name;
 
@@ -28,7 +25,7 @@ public class User{
 
     private AccountStatus accountStatus = AccountStatus.ACTIVE;
 
-    private String role;
+    private AccountType accountType;
 
     public boolean isActive() {
         return accountStatus.isActive();

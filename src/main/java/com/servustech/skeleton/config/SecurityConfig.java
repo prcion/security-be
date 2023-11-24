@@ -43,19 +43,6 @@ public class SecurityConfig {
         return new JwtAuthenticationFilter();
     }
 
-//    @Bean
-//    public AuthenticationManager configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-//        return authenticationManagerBuilder
-//                .userDetailsService(customUserDetailsService)
-//                .passwordEncoder(passwordEncoder())
-//                .build();
-//    }
-//
-//    @Bean(BeanIds.AUTHENTICATION_MANAGER)
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
-
     @Bean
     public AuthenticationManager authenticationManager(List<AuthenticationProvider> authenticationProviders) {
         return new ProviderManager(authenticationProviders);
