@@ -36,7 +36,7 @@ public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-    private static final String[] swaggerConfig = {"/swagger**", "/**/swagger**", "/**/springfox**", "/api-doc/**", "/**/api-docs"};
+    private static final String[] swaggerConfig = {"/v3/api-docs/**", "/swagger-ui/**"};
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -69,6 +69,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
+                        .requestMatchers(swaggerConfig).permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(x -> x.accessDeniedHandler(jwtAccessDeniedHandler).authenticationEntryPoint(unauthorizedHandler))
