@@ -14,8 +14,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -64,25 +63,21 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        var exceptionHandlingConfigurer = new ExceptionHandlingConfigurer();
-        exceptionHandlingConfigurer.accessDeniedHandler(jwtAccessDeniedHandler);
-        exceptionHandlingConfigurer.authenticationEntryPoint(unauthorizedHandler);
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http
                 .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(x -> x.accessDeniedHandler(jwtAccessDeniedHandler).authenticationEntryPoint(unauthorizedHandler))
+                .csrf(AbstractHttpConfigurer::disable)
         ;
 
         return http.build();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/api/auth/login", "/api/auth/register");
-    }
 
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
