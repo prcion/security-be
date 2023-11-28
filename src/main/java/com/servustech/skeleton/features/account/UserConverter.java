@@ -18,7 +18,7 @@ public class UserConverter {
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .accountStatus(AccountStatus.PENDING)
-                .accountType(AccountType.USER)
+                .accountType(AccountType.ROLE_USER)
                 .build();
     }
 

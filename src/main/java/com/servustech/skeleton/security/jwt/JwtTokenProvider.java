@@ -23,13 +23,6 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class JwtTokenProvider {
-
-    @Value("${jwt.access-expiration-in-ms}")
-    private int accessjwtExpirationInMs;
-
-    @Value("${jwt.refresh-expiration-in-ms}")
-    private int refreshJwtExpirationInMs;
-
     private final String secret;
 
     private final Key key;
@@ -39,20 +32,15 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateRefreshToken(UserDetails userPrincipal) {
-        return generateToken(userPrincipal, refreshJwtExpirationInMs);
-    }
-
     public String generateAccessToken(UserDetails userPrincipal) {
-        return generateToken(userPrincipal, accessjwtExpirationInMs);
+        return generateToken(userPrincipal);
     }
 
-    private String generateToken(UserDetails userPrincipal, int expirationInMs) {
-
-        Date now = new Date();
-
-        Date expiryDate = new Date(now.getTime() + expirationInMs);
-        final String authorities = userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+    private String generateToken(UserDetails userPrincipal) {
+        final String authorities = userPrincipal.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
 
         Map<String, Object> claims = new HashMap<>();
         claims.put(AuthConstants.ROLES_KEY, authorities);
@@ -61,7 +49,6 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setSubject(userPrincipal.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(expiryDate)
                 .signWith(key)
                 .compact();
     }
@@ -81,7 +68,7 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
 
-        return new UserDetailsResponse(claims.getSubject() , claims.get(AuthConstants.ROLES_KEY).toString());
+        return new UserDetailsResponse(claims.getSubject(), claims.get(AuthConstants.ROLES_KEY).toString());
     }
 
     public boolean validateToken(String authToken) {

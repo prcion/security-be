@@ -19,12 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 /**
  * Auth Controller, An entry class for all incoming requests
@@ -59,41 +56,13 @@ public class AuthController {
         authenticate(loginRequest.getUsername(), loginRequest.getPassword(), userDetails.getAuthorities());
 
 
-        var refreshJwt = tokenProvider.generateRefreshToken(userDetails);
         var accessJwt = tokenProvider.generateAccessToken(userDetails);
 
-        return ResponseEntity.ok(JwtAuthenticationResponse.builder().accessToken(accessJwt).refreshToken(refreshJwt).build());
+        return ResponseEntity.ok(JwtAuthenticationResponse.builder().accessToken(accessJwt).build());
     }
 
     private void authenticate(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password, authorities));
-    }
-
-    /**
-     * Validate the refresh token and generate access token
-     *
-     * @return access token
-     */
-    @GetMapping("/refresh-token")
-    public ResponseEntity<?> refreshToken(@RequestHeader(AuthConstants.AUTH_KEY) String authRefreshToken) {
-        System.out.println(authRefreshToken);
-        try {
-            if (StringUtils.hasText(authRefreshToken)) {
-
-                String refreshJwt = requestHandler.getJwtFromStringRequest(authRefreshToken);
-                String userName = tokenProvider.getUserNameFromJWT(refreshJwt);
-
-                var user = customUserDetailsService.loadUserByUsername(userName);
-
-                String accessJwtToken = tokenProvider.generateAccessToken(user);
-
-                return ResponseEntity.ok(RefreshJwtAuthenticationResponse.builder().accessToken(accessJwtToken).build());
-            } else
-                return ResponseEntity.ok(httpResponseUtil.createHttpResponse(BAD_REQUEST, AuthConstants.EMPTY_TOKEN));
-        } catch (Exception ex) {
-            log.error("Could not set user authentication in security context" + ex.getMessage());
-            return ResponseEntity.ok(httpResponseUtil.createHttpResponse(HttpStatus.UNAUTHORIZED, ex.getMessage()));
-        }
     }
 
 

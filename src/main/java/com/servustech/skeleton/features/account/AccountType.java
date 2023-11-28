@@ -1,5 +1,5 @@
 package com.servustech.skeleton.features.account;
 
 public enum AccountType {
-    USER, COMPANY_ADMINISTRATOR, SYSTEM_ADMINISTRATOR
+    ROLE_USER, ROLE_COMPANY_ADMINISTRATOR, ROLE_SYSTEM_ADMINISTRATOR
 }

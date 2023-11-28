@@ -3,7 +3,6 @@ package com.servustech.skeleton.security.handler;
 import com.servustech.skeleton.exceptions.AppException;
 import com.servustech.skeleton.security.constants.AuthConstants;
 import com.servustech.skeleton.security.constants.ErrorCodes;
-import com.servustech.skeleton.security.payload.LoginRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -14,22 +13,6 @@ import org.springframework.util.StringUtils;
  */
 @Component
 public class RequestHandler {
-
-    /**
-     * Decoding user credentials
-     *
-     * @return LoginRequest with user name and password
-     */
-    public LoginRequest decodeCredentials(String authCredentials) {
-        System.out.println(authCredentials);
-        String[] authParts = authCredentials.split("\\s+");
-        String authInfo = authParts[0];
-        String[] credentials = authInfo.split(":");
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsername(credentials[0]);
-        loginRequest.setPassword(credentials[1]);
-        return loginRequest;
-    }
 
     /**
      * Get jwt from request

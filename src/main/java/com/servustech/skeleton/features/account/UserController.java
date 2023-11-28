@@ -15,4 +15,10 @@ public class UserController {
         System.out.println(user);
         return "Congratulation User you can access this api";
     }
+
+    @GetMapping("/user/1")
+    public String test(User user) {
+        System.out.println(user);
+        return "Congratulation User you can access this api";
+    }
 }
