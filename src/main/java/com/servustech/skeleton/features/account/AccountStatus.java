@@ -16,4 +16,8 @@ public enum AccountStatus {
     }
 
     public boolean isInactive(){return this == INACTIVE;}
+
+    public boolean isPending() {
+        return this == PENDING;
+    }
 }

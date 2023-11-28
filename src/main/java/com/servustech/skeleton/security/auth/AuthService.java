@@ -21,8 +21,8 @@ public class AuthService {
     private final UserRepository userRepository;
     private final ConfirmationTokenService confirmationTokenService;
 
-    public void verifyIfUsernameOrEmailExists(String username, String email) {
-        if (userRepository.existsByUsername(username) || userRepository.existsByEmail(email)) {
+    public void verifyIfEmailExists(String email) {
+        if (userRepository.existsByEmail(email)) {
             throw new AlreadyExistsException(AuthConstants.USERNAME_OR_EMAIL_EXIST);
         }
     }

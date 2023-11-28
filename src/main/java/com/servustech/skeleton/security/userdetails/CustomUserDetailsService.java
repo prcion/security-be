@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * creating custom user details service from spring security's UserDetailsService interface
@@ -18,27 +17,40 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
+
     /**
      * Get userName from database and create a user principal
      *
      * @return user principal details
      */
     @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-        // Let people login with either username or email
-        User user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found."));
 
-        checkForUnconfirmedAccount(user);
+        checkForNotActiveAccount(user);
 
         return new UserPrincipal(user);
     }
 
 
-    private void checkForUnconfirmedAccount(User user){
+    private void checkForNotActiveAccount(User user){
+        var accountStatus = user.getAccountStatus();
 
-        if (user.isInactive())
+        if (accountStatus.isInactive()) {
             throw new CustomException("Account is inactive");
+        }
+
+        if (accountStatus.isBanned()) {
+            throw new CustomException("Account is banned");
+        }
+
+        if (accountStatus.isLocked()) {
+            throw new CustomException("Account is locked");
+        }
+
+        if (accountStatus.isPending()) {
+            throw new CustomException("Account is pending");
+        }
     }
 }

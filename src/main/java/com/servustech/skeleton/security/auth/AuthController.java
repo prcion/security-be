@@ -86,7 +86,7 @@ public class AuthController {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
-        authService.verifyIfUsernameOrEmailExists(registerRequest.getUsername(), registerRequest.getEmail());
+        authService.verifyIfEmailExists(registerRequest.getEmail());
 
         User user = userConverter.signUpRequestToUser(registerRequest);
 
