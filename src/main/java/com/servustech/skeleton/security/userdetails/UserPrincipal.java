@@ -40,12 +40,14 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return user.isActive();
+        var accountStatus = user.getAccountStatus();
+        return accountStatus.isActive();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return !user.isLocked();
+        var accountStatus = user.getAccountStatus();
+        return !accountStatus.isLocked();
     }
 
     @Override
@@ -55,6 +57,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.isActive();
+        var accountStatus = user.getAccountStatus();
+        return accountStatus.isActive();
     }
 }

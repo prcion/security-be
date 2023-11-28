@@ -14,7 +14,6 @@ public class UserConverter {
         return User
                 .builder()
                 .name(registerRequest.getName())
-                .username(registerRequest.getUsername())
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .accountStatus(AccountStatus.PENDING)
