@@ -3,7 +3,7 @@ package com.servustech.skeleton.features.account;
 import com.servustech.skeleton.features.commons.BaseDocument;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import org.springframework.data.mongodb.core.mapping.Field;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -23,4 +23,7 @@ public class User extends BaseDocument {
     private AccountStatus accountStatus = AccountStatus.ACTIVE;
 
     private AccountType accountType;
+
+    @Field(name = "company_id")
+    private String companyId;
 }

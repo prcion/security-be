@@ -6,18 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/v1/users")
 public class UserController {
 
-    @GetMapping("/user")
+    @GetMapping
     @PreAuthorize("hasRole('USER')")
     public String getCurrentUser(User user) {
-        System.out.println(user);
-        return "Congratulation User you can access this api";
-    }
-
-    @GetMapping("/user/1")
-    public String test(User user) {
         System.out.println(user);
         return "Congratulation User you can access this api";
     }
