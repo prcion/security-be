@@ -1,5 +1,6 @@
-package com.servustech.skeleton.features.commons;
+package com.servustech.skeleton.features.company.aware;
 
+import com.servustech.skeleton.features.commons.BaseDocument;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
