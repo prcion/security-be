@@ -23,16 +23,15 @@ public class BaseDocument implements Serializable {
     @Field(name = "created_date")
     private LocalDateTime createdDate;
 
-
     @LastModifiedDate
     @Field(name = "updated_date")
     private LocalDateTime updatedDate;
 
     @CreatedBy
-    @Field(name = "created_by_user_id", targetType = FieldType.OBJECT_ID)
-    private String createdByUserId;
+    @Field(name = "created_by", targetType = FieldType.OBJECT_ID)
+    private String createdBy;
 
     @LastModifiedBy
-    @Field(name = "modified_by_user_id", targetType = FieldType.OBJECT_ID)
-    private String modifiedByUserId;
+    @Field(name = "updated_by", targetType = FieldType.OBJECT_ID)
+    private String updatedBy;
 }
