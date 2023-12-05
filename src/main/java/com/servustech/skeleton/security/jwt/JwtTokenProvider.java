@@ -1,7 +1,6 @@
 package com.servustech.skeleton.security.jwt;
 
 import com.servustech.skeleton.security.constants.AuthConstants;
-import com.servustech.skeleton.security.payload.UserDetailsResponse;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -62,13 +61,13 @@ public class JwtTokenProvider {
         return claims.getSubject();
     }
 
-    public UserDetailsResponse getUserNameAndRolesFromJWT(String token) {
+    public String getEmailFromToken(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(key)
                 .parseClaimsJws(token)
                 .getBody();
 
-        return new UserDetailsResponse(claims.getSubject(), claims.get(AuthConstants.ROLES_KEY).toString());
+        return claims.getSubject();
     }
 
     public boolean validateToken(String authToken) {

@@ -4,8 +4,6 @@ import com.servustech.skeleton.features.account.User;
 import com.servustech.skeleton.features.account.UserConverter;
 import com.servustech.skeleton.features.confirmationtoken.ConfirmationToken;
 import com.servustech.skeleton.features.confirmationtoken.ConfirmationTokenService;
-import com.servustech.skeleton.security.constants.AuthConstants;
-import com.servustech.skeleton.security.handler.RequestHandler;
 import com.servustech.skeleton.security.jwt.JwtTokenProvider;
 import com.servustech.skeleton.security.payload.*;
 import com.servustech.skeleton.security.userdetails.CustomUserDetailsService;
@@ -29,12 +27,12 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @Slf4j
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/v1/auth")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
-    private final RequestHandler requestHandler;
+    private final AuthConverter authConverter;
     private final UserConverter userConverter;
     private final AuthService authService;
     private final HttpResponseUtil httpResponseUtil;
@@ -48,34 +46,39 @@ public class AuthController {
      * @return access token and refresh token
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public JwtAuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
 
-        var userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getUsername());
+        var user = customUserDetailsService.loadUserEmail(loginRequest.getEmail());
+
+        var userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getEmail());
 
 
-        authenticate(loginRequest.getUsername(), loginRequest.getPassword(), userDetails.getAuthorities());
+        authenticate(loginRequest.getEmail(), loginRequest.getPassword(), userDetails.getAuthorities());
 
 
         var accessJwt = tokenProvider.generateAccessToken(userDetails);
 
-        return ResponseEntity.ok(JwtAuthenticationResponse.builder().accessToken(accessJwt).build());
+        return JwtAuthenticationResponse
+                .builder()
+                .accessToken(accessJwt)
+                .userDetails(authConverter.fromUserToUserDetailsResponse(user))
+                .build();
     }
 
     private void authenticate(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password, authorities));
     }
 
-
     /**
      * Validate the access token and returns user details
      *
      * @return status of token
      */
-    @GetMapping("/user-details")
-    public ResponseEntity<?> details(@RequestHeader(AuthConstants.AUTH_KEY) String authToken) {
-        String jwt = requestHandler.getJwtFromStringRequest(authToken);
-        UserDetailsResponse response = tokenProvider.getUserNameAndRolesFromJWT(jwt);
-        return ResponseEntity.ok(response);
+    @PostMapping("/user-details")
+    public UserDetailsResponse details(@RequestBody JwtAuthenticationResponse request) {
+        String email = tokenProvider.getEmailFromToken(request.getAccessToken());
+        var user = customUserDetailsService.loadUserEmail(email);
+        return authConverter.fromUserToUserDetailsResponse(user);
     }
 
     /**

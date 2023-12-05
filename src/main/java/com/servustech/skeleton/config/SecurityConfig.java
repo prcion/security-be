@@ -68,7 +68,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/v1/auth/login", "/v1/auth/register").permitAll()
+                        .requestMatchers("/v1/auth/login", "/v1/auth/register", "/v1/auth/user-details").permitAll()
                         .requestMatchers(swaggerConfig).permitAll()
                         .anyRequest().authenticated()
                 )

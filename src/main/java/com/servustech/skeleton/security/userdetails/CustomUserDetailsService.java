@@ -33,6 +33,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new UserPrincipal(user);
     }
 
+    public User loadUserEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + " not found."));
+    }
+
 
     private void checkForNotActiveAccount(User user){
         var accountStatus = user.getAccountStatus();
