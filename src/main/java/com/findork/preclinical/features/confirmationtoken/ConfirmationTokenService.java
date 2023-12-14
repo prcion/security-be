@@ -1,0 +1,38 @@
+package com.findork.preclinical.features.confirmationtoken;
+
+
+import com.findork.preclinical.security.constants.AuthConstants;
+import com.findork.preclinical.exceptions.InvalidConfirmTokenException;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@AllArgsConstructor
+@Service
+public class ConfirmationTokenService {
+
+    private final ConfirmationTokenRepository confirmationTokenRepository;
+
+    public void saveToken(ConfirmationToken confirmationToken) {
+        confirmationTokenRepository.save(confirmationToken);
+    }
+
+    public ConfirmationToken findConfirmationTokenByEmail(String email) {
+        return confirmationTokenRepository.findByUserEmail(email)
+                .orElseThrow(() -> new InvalidConfirmTokenException(AuthConstants.INVALID_CONFIRMATION_TOKEN));
+    }
+
+    public void deleteTokenAfterConfirmation(String confirmationToken) {
+        confirmationTokenRepository.deleteConfirmationTokenByValue(confirmationToken);
+    }
+
+    public ConfirmationToken validateToken(String email, String confirmationTokenRequest) {
+
+        ConfirmationToken confirmationToken = findConfirmationTokenByEmail(email);
+
+        if (!confirmationToken.getValue().equals(confirmationTokenRequest)) {
+            throw new InvalidConfirmTokenException(AuthConstants.INVALID_CONFIRMATION_TOKEN);
+        }
+
+        return confirmationToken;
+    }
+}
