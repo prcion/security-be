@@ -13,6 +13,8 @@ public class AuthConverter {
                 .id(user.getId())
                 .email(user.getEmail())
                 .name(user.getName())
+                .accountStatus(user.getAccountStatus())
+                .accountType(user.getAccountType())
                 .build();
     }
 }

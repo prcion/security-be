@@ -1,14 +1,17 @@
 package com.findork.preclinical.features.company;
 
+import com.findork.preclinical.features.account.User;
 import com.findork.preclinical.features.company.dto.CompanyCreateRequest;
 import com.findork.preclinical.features.company.dto.CompanyDto;
 import com.findork.preclinical.features.company.dto.CompanyUpdateRequest;
-import com.findork.preclinical.features.account.User;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/companies")
@@ -36,5 +39,15 @@ public class CompanyController {
     public CompanyDto findById(@PathVariable String companyId) {
         var company = companyService.findByIdOrThrow(companyId);
         return companyConverter.fromEntityToDto(company);
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('SYSTEM_ADMINISTRATOR')")
+    public List<CompanyDto> findAll() {
+        var companies = companyService.findAll();
+        return companies
+                .stream()
+                .map(companyConverter::fromEntityToDto)
+                .collect(Collectors.toList());
     }
 }

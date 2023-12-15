@@ -24,22 +24,4 @@ public class CompanyUpdateRequest {
     private String zip;
     @NotNull
     private String phone;
-    private String website;
-    private String billingAttnTo;
-    private String billingAddress1;
-    private String billingAddress2;
-    private String billingCity;
-    private String billingState;
-    private String billingZip;
-    private String billingPhone;
-    @NotNull
-    private Integer daysUntilUserInviteTokenExpires;
-    @NotNull
-    private Integer numberOfTimesWhenOldPasswordShouldNotBeUsed;
-    @NotNull
-    private Integer daysUntilUsersPasswordExpires;
-    @NotNull
-    private String ein;
-    @NotNull
-    private String countryId;
 }

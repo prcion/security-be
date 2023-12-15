@@ -1,13 +1,15 @@
 package com.findork.preclinical.features.company;
 
-import com.findork.preclinical.features.commons.SecurityUtils;
-import com.findork.preclinical.features.company.dto.CompanyCreateRequest;
-import com.findork.preclinical.features.company.dto.CompanyUpdateRequest;
 import com.findork.preclinical.exceptions.NotFoundException;
 import com.findork.preclinical.exceptions.PermissionDeniedException;
 import com.findork.preclinical.features.account.User;
+import com.findork.preclinical.features.commons.SecurityUtils;
+import com.findork.preclinical.features.company.dto.CompanyCreateRequest;
+import com.findork.preclinical.features.company.dto.CompanyUpdateRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -26,16 +28,6 @@ public class CompanyService {
                 .state(request.getState())
                 .zip(request.getZip())
                 .phone(request.getPhone())
-                .website(request.getWebsite())
-                .billingAttnTo(request.getBillingAttnTo())
-                .billingAddress1(request.getBillingAddress1())
-                .billingAddress2(request.getBillingAddress2())
-                .billingCity(request.getBillingCity())
-                .billingState(request.getBillingState())
-                .billingZip(request.getBillingZip())
-                .billingPhone(request.getBillingPhone())
-                .ein(request.getEin())
-                .countryId(request.getCountryId())
                 .build();
 
         return companyRepository.save(company);
@@ -75,16 +67,11 @@ public class CompanyService {
         company.setState(request.getState());
         company.setZip(request.getZip());
         company.setPhone(request.getPhone());
-        company.setWebsite(request.getWebsite());
-        company.setBillingAttnTo(request.getBillingAttnTo());
-        company.setBillingAddress1(request.getBillingAddress1());
-        company.setBillingAddress2(request.getBillingAddress2());
-        company.setBillingState(request.getBillingState());
-        company.setBillingZip(request.getBillingZip());
-        company.setBillingPhone(request.getBillingPhone());
-        company.setEin(request.getEin());
-        company.setCountryId(request.getCountryId());
 
         return companyRepository.save(company);
+    }
+
+    public List<Company> findAll() {
+        return companyRepository.findAll();
     }
 }

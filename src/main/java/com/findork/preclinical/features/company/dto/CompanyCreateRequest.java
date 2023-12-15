@@ -25,17 +25,4 @@ public class CompanyCreateRequest {
     private String zip;
     @NotNull
     private String phone;
-	@NotNull
-	private String countryId;
-	
-    private String website;
-    private String billingAttnTo;
-    private String billingAddress1;
-    private String billingAddress2;
-    private String billingCity;
-    private String billingState;
-    private String billingZip;
-    private String billingPhone;
-
-    private String ein;
 }

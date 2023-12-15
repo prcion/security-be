@@ -19,15 +19,4 @@ public class CompanyDto {
     private String state;
     private String zip;
     private String phone;
-    private String website;
-    private String billingAttnTo;
-    private String billingAddress1;
-    private String billingAddress2;
-    private String billingCity;
-    private String billingState;
-    private String billingZip;
-    private String billingPhone;
-    private String fdaDocumentUrlPrefix;
-    private String ein;
-    private String countryId;
 }

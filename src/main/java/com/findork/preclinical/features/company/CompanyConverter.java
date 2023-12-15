@@ -20,16 +20,6 @@ public class CompanyConverter {
                 .state(company.getState())
                 .zip(company.getZip())
                 .phone(company.getPhone())
-                .website(company.getWebsite())
-                .billingAttnTo(company.getBillingAttnTo())
-                .billingAddress1(company.getBillingAddress1())
-                .billingAddress2(company.getBillingAddress2())
-                .billingCity(company.getBillingCity())
-                .billingState(company.getBillingState())
-                .billingZip(company.getBillingZip())
-                .billingPhone(company.getBillingPhone())
-                .ein(company.getEin())
-                .countryId(company.getCountryId())
                 .build();
     }
 }
