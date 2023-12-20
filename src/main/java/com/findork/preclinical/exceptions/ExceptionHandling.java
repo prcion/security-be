@@ -9,15 +9,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-
 import java.util.Objects;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
+import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @RestControllerAdvice
@@ -70,5 +70,19 @@ public class ExceptionHandling {
         return httpResponseUtil.createHttpResponse(METHOD_NOT_ALLOWED, String.format(METHOD_IS_NOT_ALLOWED, supportedMethod));
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<HttpResponse> methodNotSupportedException(MethodArgumentNotValidException exception) {
+        return httpResponseUtil.createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<HttpResponse> methodNotSupportedException(NotFoundException exception) {
+        return httpResponseUtil.createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }
+
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<HttpResponse> methodNotSupportedException(AuthenticationException exception) {
+        return httpResponseUtil.createHttpResponse(UNAUTHORIZED, exception.getMessage());
+    }
 }
