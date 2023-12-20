@@ -16,23 +16,12 @@ public class ConfirmationTokenService {
         confirmationTokenRepository.save(confirmationToken);
     }
 
-    public ConfirmationToken findConfirmationTokenByEmail(String email) {
-        return confirmationTokenRepository.findByUserEmail(email)
+    public ConfirmationToken findConfirmationTokenByValue(String value) {
+        return confirmationTokenRepository.findByValue(value)
                 .orElseThrow(() -> new InvalidConfirmTokenException(AuthConstants.INVALID_CONFIRMATION_TOKEN));
     }
 
     public void deleteTokenAfterConfirmation(String confirmationToken) {
         confirmationTokenRepository.deleteConfirmationTokenByValue(confirmationToken);
-    }
-
-    public ConfirmationToken validateToken(String email, String confirmationTokenRequest) {
-
-        ConfirmationToken confirmationToken = findConfirmationTokenByEmail(email);
-
-        if (!confirmationToken.getValue().equals(confirmationTokenRequest)) {
-            throw new InvalidConfirmTokenException(AuthConstants.INVALID_CONFIRMATION_TOKEN);
-        }
-
-        return confirmationToken;
     }
 }

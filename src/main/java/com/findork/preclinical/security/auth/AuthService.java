@@ -1,15 +1,19 @@
 package com.findork.preclinical.security.auth;
 
 import com.findork.preclinical.exceptions.AlreadyExistsException;
+import com.findork.preclinical.exceptions.NotFoundException;
+import com.findork.preclinical.exceptions.ValidationException;
 import com.findork.preclinical.security.constants.AuthConstants;
 import com.findork.preclinical.security.payload.ChangePasswordRequest;
 import com.findork.preclinical.features.account.AccountStatus;
 import com.findork.preclinical.features.account.User;
 import com.findork.preclinical.features.account.UserRepository;
 import com.findork.preclinical.features.confirmationtoken.ConfirmationTokenService;
+import com.findork.preclinical.security.payload.ConfirmationRequest;
 import com.findork.preclinical.utils.PasswordEncoderUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -20,6 +24,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final ConfirmationTokenService confirmationTokenService;
+    private final PasswordEncoder passwordEncoder;
 
     public void verifyIfEmailExists(String email) {
         if (userRepository.existsByEmail(email)) {
@@ -31,16 +36,29 @@ public class AuthService {
         return userRepository.save(user);
     }
 
-    public void validateTokenAndSetUserStatusToActive(String confirmationToken, String email) {
-        var confirmationTokenDB = confirmationTokenService.validateToken(email, confirmationToken);
+    public void confirmUserAccount(ConfirmationRequest request) {
 
-        var user = confirmationTokenDB.getUser();
+        if (!request.getPassword().equals(request.getPasswordConfirmation())) {
+            throw new ValidationException("The passwords doesn't match");
+        }
+
+        var confirmationTokenDB = confirmationTokenService.findConfirmationTokenByValue(request.getConfirmationToken());
+
+        var userOptional = userRepository.findById(confirmationTokenDB.getUserId());
+
+        if (userOptional.isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+
+        var user = userOptional.get();
+
 
         user.setAccountStatus(AccountStatus.ACTIVE);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         userRepository.save(user);
 
-        confirmationTokenService.deleteTokenAfterConfirmation(confirmationToken);
+        confirmationTokenService.deleteTokenAfterConfirmation(request.getConfirmationToken());
     }
 
 

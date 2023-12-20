@@ -14,7 +14,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "users")
 public class User extends BaseDocument {
 
-    private String name;
+    private String firstName;
+
+    private String lastName;
 
     private String email;
 
@@ -26,4 +28,8 @@ public class User extends BaseDocument {
 
     @Field(name = "company_id")
     private String companyId;
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

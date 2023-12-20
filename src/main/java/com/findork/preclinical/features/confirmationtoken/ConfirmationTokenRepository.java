@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface ConfirmationTokenRepository extends MongoRepository<ConfirmationToken, String> {
 
-    Optional<ConfirmationToken> findByUserEmail(@Param("email") String email);
+    void deleteConfirmationTokenByValue(String confirmationToken);
 
-    void deleteConfirmationTokenByValue(@Param("confirmationToken") String confirmationToken);
+    Optional<ConfirmationToken> findByValue(String value);
 }

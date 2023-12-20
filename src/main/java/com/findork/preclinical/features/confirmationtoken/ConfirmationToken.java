@@ -1,36 +1,31 @@
 package com.findork.preclinical.features.confirmationtoken;
 
 import com.findork.preclinical.features.account.User;
+import com.findork.preclinical.features.commons.BaseDocument;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.time.LocalDateTime;
+import static org.springframework.data.mongodb.core.mapping.FieldType.OBJECT_ID;
 
 
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Document(collection = "confirmation_tokens")
-public class ConfirmationToken {
-
-    @Id
-    private String id;
+public class ConfirmationToken extends BaseDocument {
 
     private String value;
 
-    @CreatedDate
-    private LocalDateTime createdOn;
-
-    @DBRef
-    private User user;
+    @Field(value = "user_id", targetType = OBJECT_ID)
+    private String userId;
 
     public ConfirmationToken(String value, User account) {
         this.value = value;
-        this.user = account;
+        this.userId = account.getId();
     }
 }

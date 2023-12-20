@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -87,11 +88,12 @@ public class AuthController {
      * @return user registration status
      */
     @PostMapping("/register")
+    @PreAuthorize("hasAnyRole('COMPANY_ADMINISTRATOR', 'SYSTEM_ADMINISTRATOR')")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
         authService.verifyIfEmailExists(registerRequest.getEmail());
 
-        User user = userConverter.signUpRequestToUser(registerRequest);
+        User user = authConverter.signUpRequestToUser(registerRequest);
 
         user = authService.save(user);
 
@@ -105,8 +107,8 @@ public class AuthController {
 
 
     @PutMapping("/confirmation")
-    public void confirmUserAccount(@Valid @RequestParam("email") String email, @RequestParam("token") String confirmationToken) {
-        authService.validateTokenAndSetUserStatusToActive(confirmationToken, email);
+    public void confirmUserAccount(@Valid @RequestBody ConfirmationRequest request) {
+        authService.confirmUserAccount(request);
     }
 
     @PostMapping("/change-password")
