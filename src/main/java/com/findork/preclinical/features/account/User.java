@@ -4,6 +4,7 @@ import com.findork.preclinical.features.commons.BaseDocument;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -26,7 +27,9 @@ public class User extends BaseDocument {
 
     private AccountType accountType;
 
-    @Field(name = "company_id")
+    private boolean allowTwoStepAuthentication;
+
+    @Field(name = "company_id", targetType = FieldType.OBJECT_ID)
     private String companyId;
 
     public String getFullName() {

@@ -80,9 +80,19 @@ public class ExceptionHandling {
         return httpResponseUtil.createHttpResponse(BAD_REQUEST, exception.getMessage());
     }
 
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<HttpResponse> methodValidationException(ValidationException exception) {
+        return httpResponseUtil.createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }
+
 
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<HttpResponse> methodNotSupportedException(AuthenticationException exception) {
+    public ResponseEntity<HttpResponse> methodAuthenticationException(AuthenticationException exception) {
+        return httpResponseUtil.createHttpResponse(UNAUTHORIZED, exception.getMessage());
+    }
+
+    @ExceptionHandler(PermissionDeniedException.class)
+    public ResponseEntity<HttpResponse> methodPermissionDeniedException(PermissionDeniedException exception) {
         return httpResponseUtil.createHttpResponse(UNAUTHORIZED, exception.getMessage());
     }
 }

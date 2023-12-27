@@ -1,6 +1,8 @@
 package com.findork.preclinical.security.auth;
 
+import com.findork.preclinical.exceptions.PermissionDeniedException;
 import com.findork.preclinical.features.account.User;
+import com.findork.preclinical.features.account.security_codes.SecurityCodeService;
 import com.findork.preclinical.features.confirmationtoken.ConfirmationToken;
 import com.findork.preclinical.features.confirmationtoken.ConfirmationTokenService;
 import com.findork.preclinical.integrations.ThymeleafMailService;
@@ -18,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -42,7 +45,8 @@ public class AuthController {
     private final HttpResponseUtil httpResponseUtil;
     private final CustomUserDetailsService customUserDetailsService;
     private final ConfirmationTokenService confirmationTokenService;
-
+    private final SecurityCodeService securityCodeService;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Validate the credentials and generate the jwt tokens
@@ -54,10 +58,40 @@ public class AuthController {
 
         var user = customUserDetailsService.loadUserEmail(loginRequest.getEmail());
 
-        var userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getEmail());
+        validatePassword(user.getPassword(), loginRequest.getPassword());
+
+        if (user.isAllowTwoStepAuthentication()) {
+            securityCodeService.createSecurityCode(user);
+            return JwtAuthenticationResponse
+                    .builder()
+                    .httpStatusCode(666)
+                    .build();
+        }
+
+        return authenticate(user, loginRequest.getEmail(), loginRequest.getPassword());
+    }
+
+    @PostMapping("/2fa")
+    public JwtAuthenticationResponse confirm2FA(@RequestBody Login2FARequest request) {
+        var user = customUserDetailsService.loadUserEmail(request.getEmail());
+
+        validatePassword(user.getPassword(), request.getPassword());
+        securityCodeService.validate(user, request.getSecurityCode());
+
+        return authenticate(user, request.getEmail(), request.getPassword());
+    }
+
+    public void validatePassword(String password, String requestPassword) {
+        if (!passwordEncoder.matches(requestPassword, password)) {
+            throw new PermissionDeniedException("Passwords don't match");
+        }
+    }
+
+    private JwtAuthenticationResponse authenticate(User user, String email, String password) {
+        var userDetails = customUserDetailsService.loadUserByUsername(email);
 
 
-        authenticate(loginRequest.getEmail(), loginRequest.getPassword(), userDetails.getAuthorities());
+        authenticate(email, password, userDetails.getAuthorities());
 
 
         var accessJwt = tokenProvider.generateAccessToken(userDetails);
@@ -66,6 +100,7 @@ public class AuthController {
                 .builder()
                 .accessToken(accessJwt)
                 .userDetails(authConverter.fromUserToUserDetailsResponse(user))
+                .httpStatusCode(200)
                 .build();
     }
 
