@@ -1,9 +1,9 @@
 package com.findork.preclinical.security.auth;
 
 import com.findork.preclinical.features.account.User;
-import com.findork.preclinical.features.account.UserConverter;
 import com.findork.preclinical.features.confirmationtoken.ConfirmationToken;
 import com.findork.preclinical.features.confirmationtoken.ConfirmationTokenService;
+import com.findork.preclinical.integrations.ThymeleafMailService;
 import com.findork.preclinical.security.jwt.JwtTokenProvider;
 import com.findork.preclinical.security.payload.*;
 import com.findork.preclinical.security.userdetails.CustomUserDetailsService;
@@ -20,7 +20,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Collection;
+
+import static org.springframework.http.HttpHeaders.ORIGIN;
 
 /**
  * Auth Controller, An entry class for all incoming requests
@@ -34,7 +37,7 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
     private final AuthConverter authConverter;
-    private final UserConverter userConverter;
+    private final ThymeleafMailService thymeleafMailService;
     private final AuthService authService;
     private final HttpResponseUtil httpResponseUtil;
     private final CustomUserDetailsService customUserDetailsService;
@@ -90,7 +93,7 @@ public class AuthController {
     @PostMapping("/register")
     @PreAuthorize("hasAnyRole('COMPANY_ADMINISTRATOR', 'SYSTEM_ADMINISTRATOR')")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest, @RequestHeader(ORIGIN) URI origin) {
         authService.verifyIfEmailExists(registerRequest.getEmail());
 
         User user = authConverter.signUpRequestToUser(registerRequest);
@@ -101,6 +104,8 @@ public class AuthController {
 
         confirmationTokenService.saveToken(new ConfirmationToken(confirmToken, user));
 
+        System.out.println(origin);
+        thymeleafMailService.sendActivationEmail(user, origin, confirmToken);
 
         return ResponseEntity.ok(httpResponseUtil.createHttpResponse(HttpStatus.CREATED, "User registered successfully"));
     }

@@ -21,10 +21,9 @@
                 <span style="">To activate your account please click the link below:</span></td>
         </tr>
         <tr style="width: 500px; background-color: white;">
-
-            <td style="text-align: center; padding-bottom: 30px"><a th:href="@{${baseUrl}} + 'api/auth/confirmation?email='+${email}+'&amp;token=' + ${token}" target="_blank" rel="nofollow">
+            <td style="text-align: center; padding-bottom: 30px"><a th:href="@{${confirmationURL}}" target="_blank" rel="nofollow">
                 <span
-                    style="background-color: white; color: rgb(33,150,243); display: inline-block; border: 1px solid; border-color:rgb(33,150,243); font-size: 18px; padding: 10px 30px 10px; color: rgb(33,150,243)">Activate account</span>
+                        style="background-color: white; color: rgb(33,150,243); display: inline-block; border: 1px solid; border-color:rgb(33,150,243); font-size: 18px; padding: 10px 30px 10px; color: rgb(33,150,243)">Activate account</span>
             </a></td>
         </tr>
         <tr>

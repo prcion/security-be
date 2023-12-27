@@ -9,17 +9,15 @@ spring:
       uri: mongodb://localhost:27017/preclinical
 
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: xqtpos@gmail.com
-    password: Worldbank123
-    properties.mail.smtp:
-      socketFactory.port: 465
-      socketFactory.class: javax.net.ssl.SSLSocketFactory
-      socketFactory.fallback: false
-      auth: true
-      ssl.enable: true
-      starttls.enable: false
+    from: ticket-office@myboxoffice.info
+    host: email-smtp.us-east-1.amazonaws.com
+    username: AKIATQXZTZO7EGKYULM7
+    password: BI6UJdoumXb5mMD6BBdITHxxw/BF240/xDuHigH1X6V1
+    port: 465
+    properties:
+      mail.smtp.host: email-smtp.us-east-1.amazonaws.com
+      mail.smtp.ssl.enable: true
+    templates-path: templates/
 
   thymeleaf:
     enabled: false
