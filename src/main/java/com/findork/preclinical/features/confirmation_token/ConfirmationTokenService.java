@@ -1,4 +1,4 @@
-package com.findork.preclinical.features.confirmationtoken;
+package com.findork.preclinical.features.confirmation_token;
 
 
 import com.findork.preclinical.security.constants.AuthConstants;

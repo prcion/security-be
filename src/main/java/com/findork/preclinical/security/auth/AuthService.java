@@ -8,7 +8,7 @@ import com.findork.preclinical.security.payload.ChangePasswordRequest;
 import com.findork.preclinical.features.account.AccountStatus;
 import com.findork.preclinical.features.account.User;
 import com.findork.preclinical.features.account.UserRepository;
-import com.findork.preclinical.features.confirmationtoken.ConfirmationTokenService;
+import com.findork.preclinical.features.confirmation_token.ConfirmationTokenService;
 import com.findork.preclinical.security.payload.ConfirmationRequest;
 import com.findork.preclinical.utils.PasswordEncoderUtils;
 import lombok.AllArgsConstructor;
