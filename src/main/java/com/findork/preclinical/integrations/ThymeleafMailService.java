@@ -1,6 +1,6 @@
 package com.findork.preclinical.integrations;
 
-import com.findork.preclinical.features.account.User;
+import com.findork.preclinical.features.account.domain.User;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

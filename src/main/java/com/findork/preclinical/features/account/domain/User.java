@@ -1,4 +1,4 @@
-package com.findork.preclinical.features.account;
+package com.findork.preclinical.features.account.domain;
 
 import com.findork.preclinical.features.commons.BaseDocument;
 import lombok.*;

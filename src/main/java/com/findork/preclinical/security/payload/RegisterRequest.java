@@ -1,7 +1,7 @@
 package com.findork.preclinical.security.payload;
 
 import com.findork.preclinical.exceptions.PermissionDeniedException;
-import com.findork.preclinical.features.account.AccountType;
+import com.findork.preclinical.features.account.domain.AccountType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

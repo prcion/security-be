@@ -1,7 +1,7 @@
 package com.findork.preclinical.features.account.security_codes;
 
 import com.findork.preclinical.exceptions.ValidationException;
-import com.findork.preclinical.features.account.User;
+import com.findork.preclinical.features.account.domain.User;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;

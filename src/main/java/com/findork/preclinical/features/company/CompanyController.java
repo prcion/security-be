@@ -1,6 +1,6 @@
 package com.findork.preclinical.features.company;
 
-import com.findork.preclinical.features.account.User;
+import com.findork.preclinical.features.account.domain.User;
 import com.findork.preclinical.features.company.dto.CompanyCreateRequest;
 import com.findork.preclinical.features.company.dto.CompanyDto;
 import com.findork.preclinical.features.company.dto.CompanyUpdateRequest;

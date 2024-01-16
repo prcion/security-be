@@ -1,7 +1,7 @@
 package com.findork.preclinical.security.auth;
 
 import com.findork.preclinical.exceptions.PermissionDeniedException;
-import com.findork.preclinical.features.account.User;
+import com.findork.preclinical.features.account.domain.User;
 import com.findork.preclinical.features.account.security_codes.SecurityCodeService;
 import com.findork.preclinical.features.confirmation_token.ConfirmationToken;
 import com.findork.preclinical.features.confirmation_token.ConfirmationTokenService;
@@ -139,7 +139,6 @@ public class AuthController {
 
         confirmationTokenService.saveToken(new ConfirmationToken(confirmToken, user));
 
-        System.out.println(origin);
         thymeleafMailService.sendActivationEmail(user, origin, confirmToken);
 
         return ResponseEntity.ok(httpResponseUtil.createHttpResponse(HttpStatus.CREATED, "User registered successfully"));

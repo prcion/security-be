@@ -1,4 +1,4 @@
-package com.findork.preclinical.security.payload;
+package com.findork.preclinical.features.account.dto;
 
 import com.findork.preclinical.features.account.domain.AccountStatus;
 import com.findork.preclinical.features.account.domain.AccountType;
@@ -9,14 +9,20 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
-public class UserDetailsResponse {
+@Builder
+public class UserAdministrationResponse {
     private String id;
-    private String name;
+
+    private String firstName;
+
+    private String lastName;
+
     private String email;
 
     private AccountStatus accountStatus;
 
     private AccountType accountType;
+
+    private boolean allowTwoStepAuthentication;
 }

@@ -2,7 +2,7 @@ package com.findork.preclinical.features.company;
 
 import com.findork.preclinical.exceptions.NotFoundException;
 import com.findork.preclinical.exceptions.PermissionDeniedException;
-import com.findork.preclinical.features.account.User;
+import com.findork.preclinical.features.account.domain.User;
 import com.findork.preclinical.features.commons.SecurityUtils;
 import com.findork.preclinical.features.company.dto.CompanyCreateRequest;
 import com.findork.preclinical.features.company.dto.CompanyUpdateRequest;
@@ -39,7 +39,7 @@ public class CompanyService {
         }
     }
 
-    private void validateIfUserCanAccessCompany(String companyId, User user) {
+    public static void validateIfUserCanAccessCompany(String companyId, User user) {
         if (!user.getAccountType().isSystemAdministrator()) {
             if (!companyId.equals(user.getCompanyId())){
                 throw new PermissionDeniedException("You're not allowed to do this");

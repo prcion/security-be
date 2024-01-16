@@ -1,4 +1,4 @@
-package com.findork.preclinical.features.account;
+package com.findork.preclinical.features.account.domain;
 
 public enum AccountStatus {
     ACTIVE, INACTIVE, PENDING, BANNED, LOCKED;

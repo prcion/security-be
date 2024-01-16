@@ -1,6 +1,6 @@
 package com.findork.preclinical.features.commons;
 
-import com.findork.preclinical.features.account.User;
+import com.findork.preclinical.features.account.domain.User;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 
 import java.util.Objects;

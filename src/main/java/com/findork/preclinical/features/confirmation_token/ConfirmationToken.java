@@ -1,6 +1,6 @@
 package com.findork.preclinical.features.confirmation_token;
 
-import com.findork.preclinical.features.account.User;
+import com.findork.preclinical.features.account.domain.User;
 import com.findork.preclinical.features.commons.BaseDocument;
 import lombok.AllArgsConstructor;
 import lombok.Data;
