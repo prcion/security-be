@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -45,6 +46,7 @@ public class ThymeleafMailService {
         }
     }
 
+    @Async
     public void sendActivationEmail(User user, URI origin, String token) {
         log.debug("Sending activation e-mail to '{}'", user.getEmail());
         var context = new Context();
