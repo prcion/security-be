@@ -17,6 +17,7 @@ public class AuthConverter {
                 .name(user.getFullName())
                 .accountStatus(user.getAccountStatus())
                 .accountType(user.getAccountType())
+                .companyId(user.getCompanyId())
                 .build();
     }
 

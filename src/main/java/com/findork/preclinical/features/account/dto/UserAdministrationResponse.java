@@ -25,4 +25,6 @@ public class UserAdministrationResponse {
     private AccountType accountType;
 
     private boolean allowTwoStepAuthentication;
+
+    private String companyId;
 }

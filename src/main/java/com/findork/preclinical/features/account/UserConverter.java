@@ -2,7 +2,6 @@ package com.findork.preclinical.features.account;
 
 import com.findork.preclinical.features.account.domain.User;
 import com.findork.preclinical.features.account.dto.UserAdministrationResponse;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,6 +17,7 @@ public class UserConverter {
                 .accountStatus(user.getAccountStatus())
                 .accountType(user.getAccountType())
                 .allowTwoStepAuthentication(user.isAllowTwoStepAuthentication())
+                .companyId(user.getCompanyId())
                 .build();
     }
 }

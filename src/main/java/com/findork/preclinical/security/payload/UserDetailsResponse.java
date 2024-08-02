@@ -19,4 +19,6 @@ public class UserDetailsResponse {
     private AccountStatus accountStatus;
 
     private AccountType accountType;
+
+    private String companyId;
 }
