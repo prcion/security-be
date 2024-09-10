@@ -1,9 +1,9 @@
 package com.findork.preclinical.config;
 
-import com.findork.preclinical.features.account.UserRepository;
-import com.findork.preclinical.features.account.domain.AccountStatus;
-import com.findork.preclinical.features.account.domain.AccountType;
-import com.findork.preclinical.features.account.domain.User;
+import com.findork.preclinical.features.administration.account.UserRepository;
+import com.findork.preclinical.features.administration.account.domain.AccountStatus;
+import com.findork.preclinical.features.administration.account.domain.AccountType;
+import com.findork.preclinical.features.administration.account.domain.User;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,8 @@
 package com.findork.preclinical.security.userdetails;
 
 import com.findork.preclinical.exceptions.CustomException;
-import com.findork.preclinical.features.account.domain.User;
-import com.findork.preclinical.features.account.UserRepository;
+import com.findork.preclinical.features.administration.account.domain.User;
+import com.findork.preclinical.features.administration.account.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

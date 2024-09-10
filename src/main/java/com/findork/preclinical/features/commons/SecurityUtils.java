@@ -1,6 +1,7 @@
 package com.findork.preclinical.features.commons;
 
-import com.findork.preclinical.features.account.domain.User;
+import com.findork.preclinical.features.administration.account.domain.User;
+import com.findork.preclinical.security.userdetails.UserPrincipal;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 
 import java.util.Objects;
@@ -23,6 +24,6 @@ public final class SecurityUtils {
      * Designed to improve code readability, but can introduce exceptions
      */
     public static User getAuthenticatedPrincipal() {
-        return (User) Objects.requireNonNull(getContext().getAuthentication()).getPrincipal();
+        return ((UserPrincipal) Objects.requireNonNull(getContext().getAuthentication()).getPrincipal()).getUser();
     }
 }

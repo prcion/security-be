@@ -1,9 +1,9 @@
 package com.findork.preclinical.security.auth;
 
-import com.findork.preclinical.features.account.domain.AccountStatus;
+import com.findork.preclinical.features.administration.account.domain.AccountStatus;
 import com.findork.preclinical.security.payload.RegisterRequest;
 import com.findork.preclinical.security.payload.UserDetailsResponse;
-import com.findork.preclinical.features.account.domain.User;
+import com.findork.preclinical.features.administration.account.domain.User;
 import org.springframework.stereotype.Component;
 
 @Component

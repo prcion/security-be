@@ -1,6 +1,6 @@
 package com.findork.preclinical.security.userdetails;
 
-import com.findork.preclinical.features.account.domain.User;
+import com.findork.preclinical.features.administration.account.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

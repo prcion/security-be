@@ -1,10 +1,10 @@
 package com.findork.preclinical.security.auth;
 
 import com.findork.preclinical.exceptions.PermissionDeniedException;
-import com.findork.preclinical.features.account.domain.User;
-import com.findork.preclinical.features.account.security_codes.SecurityCodeService;
-import com.findork.preclinical.features.confirmation_token.ConfirmationToken;
-import com.findork.preclinical.features.confirmation_token.ConfirmationTokenService;
+import com.findork.preclinical.features.administration.account.domain.User;
+import com.findork.preclinical.features.administration.account.security_codes.SecurityCodeService;
+import com.findork.preclinical.features.administration.account.confirmation_token.ConfirmationToken;
+import com.findork.preclinical.features.administration.account.confirmation_token.ConfirmationTokenService;
 import com.findork.preclinical.integrations.ThymeleafMailService;
 import com.findork.preclinical.security.jwt.JwtTokenProvider;
 import com.findork.preclinical.security.payload.*;
