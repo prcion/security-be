@@ -1,6 +1,5 @@
 package com.findork.preclinical.features.administration.account;
 
-import com.findork.preclinical.aop.Audit;
 import com.findork.preclinical.features.administration.account.domain.User;
 import com.findork.preclinical.features.administration.account.dto.UserAdministrationResponse;
 import lombok.AllArgsConstructor;
@@ -21,13 +20,6 @@ public class UserController {
     private final UserService userService;
     private final UserConverter userConverter;
 
-    @GetMapping("/{userId}/{companyId}/{siteId}")
-    @Audit(message = "message here")
-    public String getCurrentUser(@PathVariable String userId, @PathVariable String companyId, @PathVariable String siteId) {
-//        System.out.println(user);
-        return "Congratulation User you can access this api";
-    }
-
     @GetMapping("/companies/{companyId}")
     @PreAuthorize("hasAnyRole('SYSTEM_ADMINISTRATOR', 'COMPANY_ADMINISTRATOR')")
     public List<UserAdministrationResponse> findAllByCompanyId(@PathVariable String companyId, User user) {
@@ -36,5 +28,12 @@ public class UserController {
                 .stream()
                 .map(userConverter::fromEntityToAdministrationResponse)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{userId}")
+    @PreAuthorize("hasAnyRole('SYSTEM_ADMINISTRATOR', 'COMPANY_ADMINISTRATOR')")
+    public UserAdministrationResponse findOneById(@PathVariable String userId) {
+        var user = userService.findByIdOrThrow(userId);
+        return userConverter.fromEntityToAdministrationResponse(user);
     }
 }

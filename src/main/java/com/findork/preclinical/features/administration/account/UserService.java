@@ -16,4 +16,9 @@ public class UserService {
         CompanyService.validateIfUserCanAccessCompany(companyId, user);
         return userRepository.findAllByCompanyId(companyId);
     }
+
+    public User findByIdOrThrow(String userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }
